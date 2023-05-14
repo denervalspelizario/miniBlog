@@ -17,6 +17,25 @@ export default function Navbar(){
             Home
           </NavLink>
         </li>
+
+        <li>
+          <NavLink 
+            to='/login' 
+            className={({isActive}) => (isActive ? styles.active : "") }
+          >
+            Login
+          </NavLink>
+        </li>
+        <li>
+          <NavLink 
+            to='/register'
+            className={({isActive}) => (isActive ? styles.active : "") } 
+          >
+            Registre-se
+          </NavLink>
+        </li>
+
+
         <li>
           <NavLink 
             to='/about'
