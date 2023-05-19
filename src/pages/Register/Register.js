@@ -13,12 +13,14 @@ export default function Register(){
 
   const { createUser, error: authError, loading } = useAuthentication(); // pegando todos os hooks de useAuthentication para usa-los
 
+
+  // FUNÇÃO QUE PEGA OS DADOS DOS INPUTS SOMADOS COM OS HOOKS E CRIA USUARIO LA NO FIRESTORE
   const handleSubmit = async (e) => {  // e de event 
     e.preventDefault() // garantindo que ao clicar no form não atualize
     
     setError("") // zerando os erros
     
-    const user = {  //objeto chamado user com 3 states dos inputs
+    const user = {  //objeto chamado user com 3 states dos inputs que serão usados para criar autenticação do usuario
       displayName,
       email,
       password
@@ -29,20 +31,21 @@ export default function Register(){
       return
     }
 
-    const res = await createUser(user) // passando dados de user criando para res para ultiliza-lo
+    const res = await createUser(user) // usando o hook createUser com os dados de user(dados dos inputs) criando usuario e adicionando em res
 
     console.log(res)
   };
 
-  useEffect(() => {
+  // funcao que se houver erro no auth indica esse erro na state com o tipo de erro atravez do authError
+  useEffect(() => {  
 
-    if(authError){
+    if(authError){ // authError esta true ou seja houve algum erro na auth
 
       setError(authError);
 
     }
 
-  },[authError])
+  },[authError]) 
 
 
   return (
@@ -98,8 +101,12 @@ export default function Register(){
             onChange={(e) => setConfirmPassword(e.target.value)} // ao digitar dado vai pra state
            />
         </label>
-        {!loading && <button className='btn' >Cadastrar</button>}
-        {loading && (
+        
+        {!loading &&                               // loading estando false então btn sera Cadastrar  
+         <button className='btn' >Cadastrar</button>
+        }
+        
+        {loading && (                           // loading estando true ou seja ainda esta fazendo a requisição entao o btn sera de aguarde além de estar em disable
           <button className='btn' disabled>
             Aguarde...
           </button>

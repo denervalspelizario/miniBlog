@@ -1,4 +1,4 @@
-import { db} from '../firebase/config'
+
 import {                 // importando bibliotecas de autenticacao do firebase
   getAuth,
   createUserWithEmailAndPassword,
@@ -33,7 +33,7 @@ export const useAuthentication = () => {
     checkIfIsCancelled() // verificando se esta cancelado(cleanup)
 
     setLoading(true) // state de loading fica true até terminar a requisiçãod e autenticação
-    setError(null)
+    setError("")  // state error inicia vazia
 
     try {  // deu certo
 
@@ -58,18 +58,18 @@ export const useAuthentication = () => {
       console.log(error.message) // retorna msg de erro
       console.log(typeof error.message) // retorna tipo de erro
 
-      let systemErrorMessage
+      let systemErrorMessage // variavel que vai conter msg de erro 
 
-      if(error.message.includes("Password")){
+      if(error.message.includes("Password")){ // se o erro for de password
 
         systemErrorMessage = "A senha precisa conter pelo menos 6 caracteres."
 
-      } else if(error.message.includes("email-already")){
+      } else if(error.message.includes("email-already")){ // se erro for de email já em uso
 
         systemErrorMessage = "E-mail já cadastrado."
 
-      } else { 
-        
+      } else {  // caso outro erro 
+         
         systemErrorMessage = "Ocorreum erro, por favor tente mais tarde.";
 
       }
