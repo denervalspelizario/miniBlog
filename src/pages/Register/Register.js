@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import styles from './Register.module.css';
+import { useAuthentication } from '../../hooks/useAuthentication'; // importando hook para autenticação
 
 export default function Register(){
 
@@ -9,7 +10,10 @@ export default function Register(){
   const [confirmPassword, setConfirmPassword] = useState(""); // states de inputs
   const [error, setError] = useState(""); // states de erro
 
-  const handleSubmit = (e) => {  // e de event 
+
+  const { createUser, error: authError, loading } = useAuthentication(); // pegando todos os hooks de useAuthentication para usa-los
+
+  const handleSubmit = async (e) => {  // e de event 
     e.preventDefault() // garantindo que ao clicar no form não atualize
     
     setError("") // zerando os erros
@@ -24,7 +28,21 @@ export default function Register(){
       setError("As senhas precisam ser iguais!")  // adiciona a state de erro msg de erro
       return
     }
-  }
+
+    const res = await createUser(user) // passando dados de user criando para res para ultiliza-lo
+
+    console.log(res)
+  };
+
+  useEffect(() => {
+
+    if(authError){
+
+      setError(authError);
+
+    }
+
+  },[authError])
 
 
   return (
@@ -80,8 +98,12 @@ export default function Register(){
             onChange={(e) => setConfirmPassword(e.target.value)} // ao digitar dado vai pra state
            />
         </label>
-        <button className='btn' >Cadastrar</button>
-        
+        {!loading && <button className='btn' >Cadastrar</button>}
+        {loading && (
+          <button className='btn' disabled>
+            Aguarde...
+          </button>
+        )}
         {error && // deu erro retorna erro
           <p className='error'>{error}</p> 
         }
