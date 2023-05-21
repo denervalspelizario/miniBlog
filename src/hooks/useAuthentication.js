@@ -1,4 +1,4 @@
-
+import { db } from '../firebase/config'; // não esquece de importar o db sem ele dá problema 
 import {                 // importando bibliotecas de autenticacao do firebase
   getAuth,
   createUserWithEmailAndPassword,
@@ -28,6 +28,7 @@ export const useAuthentication = () => {
     }
   }
 
+  // FUNÇÃO DE CRIACAO DE USUARIO LA NO FIREBASE
   const createUser = async (data) => {
 
     checkIfIsCancelled() // verificando se esta cancelado(cleanup)
@@ -44,7 +45,7 @@ export const useAuthentication = () => {
         data.password
       )
 
-      await updateProfile(user, { // atualizando usuario(firebase pedi isso) com o displayName
+      await updateProfile(user, {     // atualizando usuario(firebase pedi isso) com o displayName
         displayName: data.displayName
 
       })
