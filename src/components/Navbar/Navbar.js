@@ -26,7 +26,8 @@ export default function Navbar(){
           </NavLink>
         </li>
 
-        {!user && ( // se user nãoe stiver logado exibe login e register
+        {/*  USER NÃO LOGADO */}
+        {!user && ( // se user NÃO estiver logado exibe login e register
           <>
           <li>
           <NavLink 
@@ -47,6 +48,27 @@ export default function Navbar(){
           </>
         )}
 
+        {/*  USER LOGADO */}
+        {user && ( // se user ESTIVER logado exibe dashboard e createpost
+          <>
+          <li>
+          <NavLink 
+            to='/post/create' 
+            className={({isActive}) => (isActive ? styles.active : "") }
+          >
+            Novo Post
+          </NavLink>
+        </li>
+        <li>
+          <NavLink 
+            to='/dashboard'
+            className={({isActive}) => (isActive ? styles.active : "") } 
+          >
+            Dashboard
+          </NavLink>
+        </li>
+          </>
+        )}
 
         <li>
           <NavLink 
