@@ -38,6 +38,7 @@ function App() {
 
 
 
+  // condicional se user estiver carregando
   if( loadingUser ){ // se estiver carregando usuario 
 
     return <p>Carregando...</p> // retorna Carregando

@@ -2,7 +2,15 @@ import React from 'react'
 import styles from './Navbar.module.css';
 import { NavLink } from 'react-router-dom'; 
 
+import { useAuthentication } from "../../hooks/useAuthentication" // importando dados da autenticação
+import { useAuthValue } from '../../context/AuthContext'  // importando para pegar valor de contexto
+
 export default function Navbar(){
+
+  const {user} = useAuthValue();
+
+  
+
   return (
     <nav className={styles.navbar}>
       <NavLink className={styles.brand}>
@@ -18,7 +26,9 @@ export default function Navbar(){
           </NavLink>
         </li>
 
-        <li>
+        {!user && ( // se user nãoe stiver logado exibe login e register
+          <>
+          <li>
           <NavLink 
             to='/login' 
             className={({isActive}) => (isActive ? styles.active : "") }
@@ -34,6 +44,8 @@ export default function Navbar(){
             Registre-se
           </NavLink>
         </li>
+          </>
+        )}
 
 
         <li>
