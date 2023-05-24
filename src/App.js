@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import './App.css';
 import { onAuthStateChanged } from "firebase/auth"; // funcao que mapeia se autenticação foi feita com sucesso
 
@@ -57,10 +57,22 @@ function App() {
               <Routes>
                 <Route  path="/" element={<Home />} />
                 <Route  path="/about" element={<About />} />
-                <Route  path="/login" element={<Login />} />
-                <Route  path="/register" element={<Register />} />
-                <Route path="/posts/create" element={<CreatePost />} />
-                <Route path="/dashboard" element={<Dashboard/>} />
+                <Route  
+                  path="/login" 
+                  element={ !user ? <Login /> : <Navigate to='/'/>  // se user não estiver logado e tentar entrar em login ele vai pra home 
+                }/>
+                <Route  
+                  path="/register" 
+                  element={ !user ? <Register /> : <Navigate to='/'/>
+                }/>
+                <Route 
+                  path="/posts/create" 
+                  element={ user ? <CreatePost /> : <Navigate to='/login'/> // se user não estiver logado e tentar entrar em createpost ele vai pra tela login
+                }/>
+                <Route 
+                  path="/dashboard" 
+                  element={ user ? <Dashboard /> : <Navigate to='/login'/> // se user não estiver logado e tentar entrar em dashboard ele vai pra login
+                }/>
               </Routes>
             </div>
           <Footer/>
