@@ -12,6 +12,7 @@ export default function Register(){
 
 
   const { createUser, error: authError, loading } = useAuthentication(); // pegando todos os hooks de useAuthentication para usa-los
+                                                                         // esse autherror é saida de erro de login e back-end
 
 
   // FUNÇÃO QUE PEGA OS DADOS DOS INPUTS SOMADOS COM OS HOOKS E CRIA USUARIO LA NO FIRESTORE
