@@ -22,7 +22,7 @@ export const useAuthentication = () => {
   const auth = getAuth()  // auth recebe as funcoes de autenticacao do firebase/auth para ser usado
 
   function checkIfIsCancelled(){ // este será nosso cleanup ou seja toda vez que tiver cancelado return vazio para evitar vazamento de memoria
-    if(cancelled){
+    if(cancelled){               // maneira de melhor performar a alicação sem vazamento de memoria
       return;
     }
   }
@@ -35,7 +35,7 @@ export const useAuthentication = () => {
     setLoading(true) // state de loading fica true até terminar a requisiçãod e autenticação
     setError("")  // state error inicia vazia
 
-    try {  // deu certo
+    try {  // deu certo certo criou o usuario então
 
       const {user} = await createUserWithEmailAndPassword ( // criando usuario atravez da funcao createUser... é await pq tem que esperar a respostas do firebase
                                                             //que vai vai ter 3 dados auth(funcoes de autent), email(dado email) e senha(dado senha)
@@ -61,9 +61,10 @@ export const useAuthentication = () => {
 
       let systemErrorMessage // variavel que vai conter msg de erro 
 
-      if(error.message.includes("Password")){ // se o erro for de password
+      // Adicionando algumas indicações de erro ao usuario 
+      if(error.message.includes("Password")){ // se o erro for de password ou seja se dentro de error message se tiver password significa que o erro foi de password sendo assim
 
-        systemErrorMessage = "A senha precisa conter pelo menos 6 caracteres."
+        systemErrorMessage = "A senha precisa conter pelo menos 6 caracteres." // adiciono essa msg a systemErrorMessage
 
       } else if(error.message.includes("email-already")){ // se erro for de email já em uso
 
@@ -86,7 +87,7 @@ export const useAuthentication = () => {
     return () => setCancelled(true); // requisição que faz o cancelled retornar true uma vez assim que termina a requisição
   }, [])
 
-  return { // de todas as unçoes vai retornar a autenticação(auth) - criaçao do usuario(createUser), error e loading
+  return { // de todas as funçoes vai retornar a autenticação(auth) - criaçao do usuario(createUser), error e loading
     auth,
     createUser,
     error,
